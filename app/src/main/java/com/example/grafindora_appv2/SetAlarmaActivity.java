@@ -51,10 +51,10 @@ public class SetAlarmaActivity extends AppCompatActivity {
                     Toast.makeText(SetAlarmaActivity.this,"Selecciona una hora",Toast.LENGTH_SHORT).show();
                 }else if (paseo.isChecked()){
                     nombre = "Paseo";
-                    crearAlarma();
+                    crearAlerta();
                 }else if(comida.isChecked()) {
                     nombre = "Comida";
-                    crearAlarma();
+                    crearAlerta();
                 }else if (!paseo.isChecked() || !comida.isChecked()){
                     Toast.makeText(SetAlarmaActivity.this,"Debes seleccionar una opción",Toast.LENGTH_SHORT).show();
                 }
@@ -64,7 +64,7 @@ public class SetAlarmaActivity extends AppCompatActivity {
 
     }
 
-    public void crearAlarma(){
+    public void crearAlerta(){
         Intent intent = new Intent(SetAlarmaActivity.this,MainActivity.class);
         intent.putExtra("hora",txtViewHora.getText().toString());
         intent.putExtra("descripcion",descrip.getText().toString());

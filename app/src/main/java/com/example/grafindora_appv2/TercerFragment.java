@@ -105,7 +105,7 @@ public class TercerFragment extends Fragment {
         btnform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!nombre.getText().toString().isEmpty() && !edad.getText().toString().isEmpty()){
+                if(!nombre.getText().toString().isEmpty() || !edad.getText().toString().isEmpty() ){
 
                    /* Intent intent = new Intent(getContext(), LoginActivity.class);
                     intent.putExtra("nombre",nombre.getText().toString());
