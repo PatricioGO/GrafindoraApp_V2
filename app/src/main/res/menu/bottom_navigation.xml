@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/primerFragment"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Perfil"/>
+    <item
+        android:id="@+id/segundoFragment"
+        android:icon="@android:drawable/ic_popup_reminder"
+        android:title="Alertas"/>
+    <item
+        android:id="@+id/tercerFragment"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Registro"/>
+
+</menu>
