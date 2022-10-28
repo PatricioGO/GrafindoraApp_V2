@@ -39,6 +39,7 @@ public class SetAlarmaActivity extends AppCompatActivity {
         comida = findViewById(R.id.rdbtncomidaalarm);
         btnAlarm = findViewById(R.id.btnguardaralarm);
 
+
         timePicker.setOnTimeChangedListener((timePicker1, i, i1) ->
                 txtViewHora.setText(i+":"+i1));
 
