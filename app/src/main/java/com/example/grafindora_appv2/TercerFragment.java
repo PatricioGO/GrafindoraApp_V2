@@ -1,6 +1,10 @@
 package com.example.grafindora_appv2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,14 +32,14 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class TercerFragment extends Fragment {
 
-    private Button btnform;
+    private Button btnform,btnform2;
     private TextInputEditText nombre;
     private TextInputEditText edad;
     private Spinner spraza;
     private RadioButton sexHem,sexMach;
     private String sexo;
 
-    String[] raza = {"Labrador","Poodle","Bulldog","Golden Retriever", "Pastor Aleman", "Bulldog Frnaces", "Beagle","Rottweiler","otro"};
+    String[] raza = {"Labrador","Poodle","Bulldog","Golden Retriever", "Pastor Aleman", "Bulldog Frances", "Beagle","Rottweiler","otro"};
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -97,6 +101,7 @@ public class TercerFragment extends Fragment {
         edad = (TextInputEditText) view.findViewById(R.id.tvedadform);
         spraza = (Spinner) view.findViewById(R.id.spnrazaform);
         btnform = (Button) view.findViewById(R.id.btnform);
+        btnform2 = (Button) view.findViewById(R.id.btnform2);
         sexHem = (RadioButton) view.findViewById(R.id.rdbthembra);
         sexMach = (RadioButton) view.findViewById(R.id.rdbtmacho);
 
@@ -107,39 +112,96 @@ public class TercerFragment extends Fragment {
             public void onClick(View view) {
                 if(!nombre.getText().toString().isEmpty() || !edad.getText().toString().isEmpty() ){
 
-                   /* Intent intent = new Intent(getContext(), LoginActivity.class);
-                    intent.putExtra("nombre",nombre.getText().toString());
-                    startActivity(intent);*/
-
                     //Checkeando la seleccion del radio buton
                     if (sexHem.isChecked()==true){
                         sexo = "Hembra";
-                    }else if (sexMach.isChecked()){
+                    }
+                    else if (sexMach.isChecked()){
                         sexo = "Macho";
                     }
 
-                    Bundle bundle = new Bundle();
+                    insertar();
 
-                    bundle.putString("nombre", nombre.getText().toString());
-                    bundle.putString("edad",edad.getText().toString());
-                    bundle.putString("raza",spraza.getSelectedItem().toString());
-                    bundle.putString("sexo", sexo);
-
-                    Fragment primerfragmet = new PrimerFragment();
-                    primerfragmet.setArguments(bundle);
-
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frame_container,primerfragmet);
-                    fragmentTransaction.commit();
-
-                    Toast.makeText(getContext(),"Mascota Registrada",Toast.LENGTH_SHORT).show();
 
                 }else{
                     Toast.makeText(getContext(),"Debes Completar los campos",Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        btnform2.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 editar();
+             }
+        });
+
         return view;
     }
+
+    public void insertar(){
+
+        try {
+            String nom = nombre.getText().toString();
+            String ed = edad.getText().toString();
+            String raz = spraza.getSelectedItem().toString();
+            String sex = sexo;
+
+            SQLiteDatabase db = getContext().openOrCreateDatabase("DB_GRAFIN", Context.MODE_PRIVATE ,null);
+            db.execSQL("CREATE TABLE IF NOT EXISTS mascota(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre VARCHAR,edad VARCHAR,raza VARCHAR,sexo VARCHAR)");
+
+            String sql = "insert into mascota(nombre,edad,raza,sexo)values(?,?,?,?)";
+            SQLiteStatement statement = db.compileStatement(sql);
+
+            statement.bindString(1,nom);
+            statement.bindString(2,ed);
+            statement.bindString(3,raz);
+            statement.bindString(4,sex);
+            statement.execute();
+
+            nombre.setText("");
+            edad.setText("");
+
+            Toast.makeText(getContext(),"Mascota Registrada",Toast.LENGTH_SHORT).show();
+
+        }catch (Exception ex){
+            Toast.makeText(getContext(),"Error, no se pudieron guardar los datos.",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void editar()
+    {
+        try
+        {
+            String nomb = nombre.getText().toString();
+            String edd = edad.getText().toString();
+            String razz = spraza.getSelectedItem().toString();
+            String sexx = sexo;
+            int id = 1;
+
+            SQLiteDatabase db = getContext().openOrCreateDatabase("DB_GRAFIN", Context.MODE_PRIVATE ,null);
+
+            String sql = " update mascota set nombre = ?,edad=?,raza=?, sexo=? where id= ?";
+            SQLiteStatement statement = db.compileStatement(sql);
+            statement.bindString(1,nomb);
+            statement.bindString(2,edd);
+            statement.bindString(3,razz);
+            statement.bindString(4,sexx);
+            statement.bindLong(5,id);
+
+
+            statement.execute();
+            Toast.makeText(getContext(),"Datos actualizados satisfactoriamente en la base de datos.",Toast.LENGTH_LONG).show();
+
+
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(getContext(),"Error no se pudieron guardar los datos.",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
+
+
 }

@@ -106,6 +106,12 @@
             android:layout_height="wrap_content"
             android:text="Guardar"
             />
+        <Button
+            android:id="@+id/btnatrasalarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Atras"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

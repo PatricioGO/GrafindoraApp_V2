@@ -3,6 +3,9 @@ package com.example.grafindora_appv2;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -11,12 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.xml.transform.Result;
 
@@ -66,17 +71,7 @@ public class PrimerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            nombrePet = getArguments().getString("nombre");
-            edadPet = getArguments().getString("edad");
-            spRaza = getArguments().getString("raza");
-            sexoPet = getArguments().getString("sexo");
-        }else{
-            nombrePet="";
-            spRaza ="";
-            edadPet ="";
-            sexoPet = "";
-        }
+
     }
 
     @Override
@@ -92,13 +87,6 @@ public class PrimerFragment extends Fragment {
 
 
 
-        nombre.append(" " + nombrePet);
-        edad.append(" " + edadPet);
-        raza.append(" " + spRaza);
-        sexo.append(" " + sexoPet);
-
-
-
         btnCamara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +95,39 @@ public class PrimerFragment extends Fragment {
             }
         });
 
+        try {
+            SQLiteDatabase db = getContext().openOrCreateDatabase("DB_GRAFIN",Context.MODE_PRIVATE ,null);
+            db.execSQL("CREATE TABLE IF NOT EXISTS mascota(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre VARCHAR,edad VARCHAR,raza VARCHAR,sexo VARCHAR)");
+
+            final Cursor c = db.rawQuery("select * from mascota",null);
+            c.moveToLast();
+            int id = c.getColumnIndex("id");
+            int nom = c.getColumnIndex("nombre");
+            int ed = c.getColumnIndex("edad");
+            int raz = c.getColumnIndex("raza");
+            int sex = c.getColumnIndex("sexo");
+
+            Mascota mascota = new Mascota();
+
+            mascota.id = c.getInt(id);
+            mascota.nombre = c.getString(nom).toString();
+            mascota.edad = c.getString(ed).toString();
+            mascota.raza = c.getString(raz).toString();
+            mascota.sexo = c.getString(sex).toString();
+
+
+            nombre.append(" "+mascota.nombre);
+            edad.append(" "+mascota.edad);
+            raza.append(" " +mascota.raza);
+            sexo.append(" "+mascota.sexo);
+
+
+        }catch (Exception ex){
+
+            Log.d("ingresa",ex.getMessage());
+            Toast.makeText(getContext(),"no hay datos",Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     @Override

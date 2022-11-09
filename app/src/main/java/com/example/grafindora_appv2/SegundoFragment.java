@@ -1,6 +1,9 @@
 package com.example.grafindora_appv2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,14 +48,7 @@ public class SegundoFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SegundoFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static SegundoFragment newInstance(String param1, String param2) {
         SegundoFragment fragment = new SegundoFragment();
@@ -84,14 +80,18 @@ public class SegundoFragment extends Fragment {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_segundo, container, false);
 
+        Button button = vista.findViewById(R.id.btndelete);
         listaAlertas = new ArrayList<>();
         recyclerAlertas=(RecyclerView) vista.findViewById(R.id.recyclerid);
         recyclerAlertas.setLayoutManager(new LinearLayoutManager(getContext()));
 
         llenarListaAlertas();
 
+
+
         AlertasAdapter adapter = new AlertasAdapter(listaAlertas);
         recyclerAlertas.setAdapter(adapter);
+
 
         return vista;
     }
@@ -113,17 +113,41 @@ public class SegundoFragment extends Fragment {
 
     public void llenarListaAlertas() {
 
-        listaAlertas.add(new Alertas(nombre,descripcion,hora));
+        try {
+            SQLiteDatabase db = getContext().openOrCreateDatabase("DB_GRAFIN", Context.MODE_PRIVATE ,null);
+            db.execSQL("CREATE TABLE IF NOT EXISTS alerta(id INTEGER PRIMARY KEY AUTOINCREMENT,hora VARCHAR,descrip VARCHAR,nombre VARCHAR)");
 
+            final Cursor c = db.rawQuery("select * from alerta",null);
 
+            int id = c.getColumnIndex("id");
+            int time = c.getColumnIndex("hora");
+            int des = c.getColumnIndex("descrip");
+            int nom = c.getColumnIndex("nombre");
 
-        /*Alertas alertas = new Alertas(nombre,descripcion,hora);
+            if(c.moveToFirst())
+            {
+                do{
+                    Alertas alert = new Alertas();
 
-        alertas.setNombre(nombre);
-        alertas.setDescripcion(descripcion);
-        alertas.setHora(hora);
+                    alert.hora = c.getString(time);
+                    alert.descripcion = c.getString(des);
+                    alert.nombre = c.getString(nom);
+                    alert.id = c.getInt(id);
 
-        listaAlertas.add(alertas);*/
+                    listaAlertas.add(alert);
+                } while(c.moveToNext());
+            }
+        }catch (Exception ex){ };
+    }
+
+    public void eliminar() {
+            try {
+                SQLiteDatabase db = getContext().openOrCreateDatabase("DB_GRAFIN", Context.MODE_PRIVATE ,null);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
     }
 }

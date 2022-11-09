@@ -123,8 +123,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:onClick="onClickAtras"
                 android:text="Aceptar" />
+
+            <Button
+                android:id="@+id/btnform2"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Editar" />
         </LinearLayout>
 
 
