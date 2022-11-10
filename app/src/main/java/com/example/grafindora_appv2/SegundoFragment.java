@@ -140,14 +140,5 @@ public class SegundoFragment extends Fragment {
         }catch (Exception ex){ };
     }
 
-    public void eliminar() {
-            try {
-                SQLiteDatabase db = getContext().openOrCreateDatabase("DB_GRAFIN", Context.MODE_PRIVATE ,null);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-    }
 }

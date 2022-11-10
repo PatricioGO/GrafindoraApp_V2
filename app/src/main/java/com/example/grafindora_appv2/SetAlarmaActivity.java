@@ -49,7 +49,6 @@ public class SetAlarmaActivity extends AppCompatActivity {
         btnAlarm = findViewById(R.id.btnguardaralarm);
         btnAtras = findViewById(R.id.btnatrasalarm);
 
-
         timePicker.setOnTimeChangedListener((timePicker1, i, i1) ->
                 txtViewHora.setText(i+":"+i1));
 

@@ -23,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.xml.transform.Result;
 
 /**
@@ -139,9 +143,17 @@ public class PrimerFragment extends Fragment {
             Bundle extras = data.getExtras();
             Bitmap bitmap = (Bitmap) extras.get("data");
             imgPerfil.setImageBitmap(bitmap);
-
+            try {
+                FileOutputStream fos = getContext().openFileOutput(crearNombreArchivo(),Context.MODE_PRIVATE);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
+                fos.close();
+            }catch (Exception e){}
         }
+    }
 
+    private String crearNombreArchivo() {
+        String fecha = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        return fecha+".jpg";
     }
 
     @Override
