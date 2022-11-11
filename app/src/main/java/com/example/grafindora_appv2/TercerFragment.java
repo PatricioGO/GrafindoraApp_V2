@@ -50,6 +50,7 @@ public class TercerFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private int registro = 1;
 
     public TercerFragment() {
         // Required empty public constructor
@@ -106,6 +107,8 @@ public class TercerFragment extends Fragment {
         sexMach = (RadioButton) view.findViewById(R.id.rdbtmacho);
 
 
+
+
         //click del boton registrar
         btnform.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +134,13 @@ public class TercerFragment extends Fragment {
         btnform2.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+
+                 if (sexHem.isChecked()==true){
+                     sexo = "Hembra";
+                 }
+                 else if (sexMach.isChecked()){
+                     sexo = "Macho";
+                 }
                  editar();
              }
         });
@@ -158,8 +168,7 @@ public class TercerFragment extends Fragment {
             statement.bindString(4,sex);
             statement.execute();
 
-            nombre.setText("");
-            edad.setText("");
+
 
             Toast.makeText(getContext(),"Mascota Registrada",Toast.LENGTH_SHORT).show();
 
@@ -176,11 +185,11 @@ public class TercerFragment extends Fragment {
             String edd = edad.getText().toString();
             String razz = spraza.getSelectedItem().toString();
             String sexx = sexo;
-            int id = 1;
+            int id = registro;
 
             SQLiteDatabase db = getContext().openOrCreateDatabase("DB_GRAFIN", Context.MODE_PRIVATE ,null);
 
-            String sql = " update mascota set nombre = ?,edad=?,raza=?, sexo=? where id= ?";
+            String sql = " update mascota set nombre =?,edad=?,raza=?,sexo=? where id= ?";
             SQLiteStatement statement = db.compileStatement(sql);
             statement.bindString(1,nomb);
             statement.bindString(2,edd);
@@ -196,7 +205,7 @@ public class TercerFragment extends Fragment {
         }
         catch (Exception ex)
         {
-            Toast.makeText(getContext(),"Error no se pudieron guardar los datos.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"Error no se pudieron editar los datos.",Toast.LENGTH_LONG).show();
         }
     }
 

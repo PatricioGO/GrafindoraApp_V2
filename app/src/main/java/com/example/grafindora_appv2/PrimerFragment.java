@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,8 +24,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.xml.transform.Result;
@@ -36,32 +39,26 @@ import javax.xml.transform.Result;
  */
 public class PrimerFragment extends Fragment {
 
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private String nombrePet,edadPet,spRaza,sexoPet;
-
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
     private ImageView imgPerfil;
     final int CAPTURA_IMAGEN = 1;
+    String []archivos;
 
     public PrimerFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PrimerFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static PrimerFragment newInstance(String param1, String param2) {
         PrimerFragment fragment = new PrimerFragment();
@@ -76,6 +73,8 @@ public class PrimerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        archivos= getContext().fileList();
+
     }
 
     @Override
@@ -88,9 +87,7 @@ public class PrimerFragment extends Fragment {
         TextView sexo = view.findViewById(R.id.tvsexo);
         Button btnCamara= view.findViewById(R.id.btncam);
         imgPerfil = view.findViewById(R.id.imgperfil);
-
-
-
+        
         btnCamara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,12 +123,9 @@ public class PrimerFragment extends Fragment {
             sexo.append(" "+mascota.sexo);
 
 
-        }catch (Exception ex){
+        }catch (Exception ex){}
 
-            Log.d("ingresa",ex.getMessage());
-            Toast.makeText(getContext(),"no hay datos",Toast.LENGTH_SHORT).show();
-
-        }
+        verFoto(0);
     }
 
     @Override
@@ -142,19 +136,36 @@ public class PrimerFragment extends Fragment {
 
             Bundle extras = data.getExtras();
             Bitmap bitmap = (Bitmap) extras.get("data");
-            imgPerfil.setImageBitmap(bitmap);
             try {
                 FileOutputStream fos = getContext().openFileOutput(crearNombreArchivo(),Context.MODE_PRIVATE);
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
+                imgPerfil.setImageBitmap(bitmap);
                 fos.close();
+
+
             }catch (Exception e){}
         }
+        verFoto(0);
     }
+
 
     private String crearNombreArchivo() {
         String fecha = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
         return fecha+".jpg";
     }
+
+    public void verFoto(int position){
+
+        try {
+            FileInputStream fileInputStream= getContext().openFileInput(archivos[position]);
+            Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+            imgPerfil.setImageBitmap(bitmap);
+            fileInputStream.close();
+        }catch (Exception e){}
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
