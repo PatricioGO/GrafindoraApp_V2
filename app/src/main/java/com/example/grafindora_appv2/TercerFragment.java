@@ -122,8 +122,8 @@ public class TercerFragment extends Fragment {
                     else if (sexMach.isChecked()){
                         sexo = "Macho";
                     }
-
                     insertar();
+                    //btnform.setVisibility(View.INVISIBLE);
 
 
                 }else{
@@ -144,6 +144,8 @@ public class TercerFragment extends Fragment {
                  editar();
              }
         });
+
+
 
         return view;
     }
@@ -171,7 +173,6 @@ public class TercerFragment extends Fragment {
 
 
             Toast.makeText(getContext(),"Mascota Registrada",Toast.LENGTH_SHORT).show();
-
         }catch (Exception ex){
             Toast.makeText(getContext(),"Error, no se pudieron guardar los datos.",Toast.LENGTH_LONG).show();
         }
@@ -199,13 +200,13 @@ public class TercerFragment extends Fragment {
 
 
             statement.execute();
-            Toast.makeText(getContext(),"Datos actualizados satisfactoriamente en la base de datos.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"Datos de mascota actualizados",Toast.LENGTH_LONG).show();
 
 
         }
         catch (Exception ex)
         {
-            Toast.makeText(getContext(),"Error no se pudieron editar los datos.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"Error, no se pudieron editar los datos.",Toast.LENGTH_LONG).show();
         }
     }
 

@@ -26,7 +26,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginBottom="20dp"
             android:textSize="30dp"
-            android:textColor="@color/azul_normal"
+            android:textColor="@color/azul_oscuro"
             android:background="@color/azul_light"
             android:textStyle="bold"
             />
@@ -36,7 +36,7 @@
             android:id="@+id/timepickerid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/azul_light_transp"
+            android:background="@color/azul_oscuro"
             android:timePickerMode="spinner" />
 
         <TextView
@@ -54,6 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:textColorHint="@color/azul_oscuro"
+            android:background="@color/azul_light"
             android:layout_marginBottom="20dp"
             app:boxBackgroundColor="@color/azul_light_transp"
             app:endIconMode="clear_text">
@@ -81,7 +83,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
-                android:background="#B0E3F2FD">
+                android:background="@color/azul_normal">
 
                 <RadioButton
                     android:id="@+id/rdbtncomidaalarm"
@@ -102,13 +104,17 @@
 
         <Button
             android:id="@+id/btnguardaralarm"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/azul_light"
+            android:textColor="@color/azul_oscuro"
             android:layout_height="wrap_content"
             android:text="Guardar"
             />
         <Button
             android:id="@+id/btnatrasalarm"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/azul_light"
+            android:textColor="@color/azul_oscuro"
             android:layout_height="wrap_content"
             android:text="Atras"
             />

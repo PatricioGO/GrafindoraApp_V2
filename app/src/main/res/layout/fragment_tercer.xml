@@ -19,8 +19,9 @@
             android:gravity="center"
             android:text="Formulario de Registro"
             android:textSize="35dp"
-            android:textColor="@color/azul_normal"
+            android:textColor="@color/azul_oscuro"
             android:background="@color/azul_light"
+            android:layout_marginTop="20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,9 +30,10 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#4390CAF9"
+            android:background="#430F0F10"
+            android:layout_marginTop="30dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,35 +43,39 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"
+                android:textColorHint="@color/azul_oscuro"
+                android:background="@color/azul_light"
                 android:layout_marginBottom="20dp"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tvnombreform"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/azul_normal"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:textColorHint="@color/azul_oscuro"
                     android:background="@color/azul_light"
                     android:hint="Nombre de Mascota" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
+                android:textColorHint="@color/azul_oscuro"
+                android:background="@color/azul_light"
                 android:layout_marginBottom="20dp"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tvedadform"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
                     android:hint="Edad"
-                    android:textColorHint="@color/azul_normal"
-                    android:background="@color/azul_light"
+                    android:textColorHint="@color/black"
+                    android:backgroundTint="@color/azul_light"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:textColor="@color/azul_normal"
+                android:textColor="@color/white"
                 android:text="Raza"
                 android:textSize="25dp"
                 android:textStyle="bold"/>
@@ -88,7 +94,7 @@
                 android:layout_width="204dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/azul_extra_light"
+                android:background="@color/azul_oscuro"
                 android:minHeight="48dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -98,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@color/azul_light"
+                android:background="@color/azul_normal"
                 android:layout_marginBottom="20dp">
 
                 <RadioButton
@@ -121,13 +127,17 @@
                 android:id="@+id/btnform"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/azul_light"
+                android:textColor="@color/azul_oscuro"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="Aceptar" />
+                android:text="Crear nueva mascota" />
 
             <Button
                 android:id="@+id/btnform2"
                 android:layout_width="280dp"
+                android:backgroundTint="@color/azul_light"
+                android:textColor="@color/azul_oscuro"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"

@@ -11,15 +11,17 @@
 
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:orientation="vertical"
-            android:background="#AEE3F2FD">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:background="#8AE8EAF6">
+        <!--android:background="#AEE3F2FD"-->
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#8AE8EAF6"
                 android:orientation="horizontal"
                 android:padding="6dp">
 
@@ -28,6 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
+                    android:textColor="@color/black"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"

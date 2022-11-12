@@ -72,7 +72,7 @@ public class PrimerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         archivos= getContext().fileList();
 
     }
@@ -125,7 +125,7 @@ public class PrimerFragment extends Fragment {
 
         }catch (Exception ex){}
 
-        verFoto(0);
+        verFoto(archivos.length);
     }
 
     @Override
@@ -136,16 +136,18 @@ public class PrimerFragment extends Fragment {
 
             Bundle extras = data.getExtras();
             Bitmap bitmap = (Bitmap) extras.get("data");
+            imgPerfil.setImageBitmap(bitmap);
             try {
                 FileOutputStream fos = getContext().openFileOutput(crearNombreArchivo(),Context.MODE_PRIVATE);
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
                 imgPerfil.setImageBitmap(bitmap);
                 fos.close();
-
+                archivos= getContext().fileList();
 
             }catch (Exception e){}
         }
-        verFoto(0);
+        verFoto(archivos.length);
+
     }
 
 
@@ -156,9 +158,8 @@ public class PrimerFragment extends Fragment {
     }
 
     public void verFoto(int position){
-
         try {
-            FileInputStream fileInputStream= getContext().openFileInput(archivos[position]);
+            FileInputStream fileInputStream= getContext().openFileInput(archivos[position-1]);
             Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
             imgPerfil.setImageBitmap(bitmap);
             fileInputStream.close();

@@ -5,11 +5,11 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.2865" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2682291666666667" />
-        <entry key="app/src/main/res/layout/activity_set_alarma.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/activity_set_alarma.xml" value="0.26557377049180325" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="app/src/main/res/layout/alertas_card.xml" value="0.2713864306784661" />
-        <entry key="app/src/main/res/layout/fragment_primer.xml" value="0.2821557971014493" />
-        <entry key="app/src/main/res/layout/fragment_segundo.xml" value="0.2821557971014493" />
+        <entry key="app/src/main/res/layout/fragment_primer.xml" value="0.26644736842105265" />
+        <entry key="app/src/main/res/layout/fragment_segundo.xml" value="0.26644736842105265" />
         <entry key="app/src/main/res/layout/fragment_tercer.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.28229166666666666" />
       </map>
