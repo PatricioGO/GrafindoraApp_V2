@@ -49,9 +49,11 @@ public class SetAlarmaActivity extends AppCompatActivity {
         btnAlarm = findViewById(R.id.btnguardaralarm);
         btnAtras = findViewById(R.id.btnatrasalarm);
 
-        timePicker.setOnTimeChangedListener((timePicker1, i, i1) ->
-                txtViewHora.setText(i+":"+i1));
-
+        timePicker.setOnTimeChangedListener((timePicker1, i, i1) -> {
+            String hora = (i <=9) ? "0"+i : String.valueOf(i);
+            String minutos = (i1 <=9) ? "0"+i1 : String.valueOf(i1);
+            txtViewHora.setText(hora+":"+minutos);
+        });
 
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
