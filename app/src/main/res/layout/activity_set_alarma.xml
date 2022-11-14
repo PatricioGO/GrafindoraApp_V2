@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/paws"
-    tools:context=".SetAlarmaActivity">
+    tools:context="santoTomas.grafindora_appv2.SetAlarmaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

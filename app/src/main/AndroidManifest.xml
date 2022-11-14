@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.grafindora_appv2">
+    package="santoTomas.grafindora_appv2">
 
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -46,17 +46,17 @@
 
         </activity>
         <receiver
-            android:name="com.example.grafindora_appv2.AlarmReceiver"
+            android:name="santoTomas.grafindora_appv2.AlarmReceiver"
             android:enabled="true" />
 
         <service
-            android:name="com.example.grafindora_appv2.NotificationService"
+            android:name="santoTomas.grafindora_appv2.NotificationService"
             android:enabled="true" />
 
 
         <!-- MAKE ALARMS RESTART ON REBOOT -->
-        <service android:name="com.example.grafindora_appv2.RebootServiceClass"/>
-        <receiver android:name="com.example.grafindora_appv2.MyRebootReceiver"
+        <service android:name="santoTomas.grafindora_appv2.RebootServiceClass"/>
+        <receiver android:name="santoTomas.grafindora_appv2.MyRebootReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
