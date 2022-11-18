@@ -65,9 +65,11 @@ public class SetAlarmaActivity extends AppCompatActivity {
                 if(txtViewHora.getText().equals("hora") ){
                     Toast.makeText(SetAlarmaActivity.this,"Selecciona una hora",Toast.LENGTH_SHORT).show();
                 }else if (paseo.isChecked()){
+
                     nombre = "Paseo";
                     crearAlerta();
                 }else if(comida.isChecked()) {
+
                     nombre = "Comida";
                     crearAlerta();
                 }else if (!paseo.isChecked() || !comida.isChecked()){

@@ -4,9 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
@@ -36,11 +33,8 @@ public class TercerFragment extends Fragment {
     String[] raza = {"Labrador","Poodle","Bulldog","Golden Retriever", "Pastor Aleman", "Bulldog Frances", "Beagle","Rottweiler","otro"};
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -117,8 +111,6 @@ public class TercerFragment extends Fragment {
                         sexo = "Macho";
                     }
                     insertar();
-                    //btnform.setVisibility(View.INVISIBLE);
-
 
                 }else{
                     Toast.makeText(getContext(),"Debes Completar los campos",Toast.LENGTH_SHORT).show();
@@ -138,8 +130,6 @@ public class TercerFragment extends Fragment {
                  editar();
              }
         });
-
-
 
         return view;
     }
@@ -163,8 +153,6 @@ public class TercerFragment extends Fragment {
             statement.bindString(3,raz);
             statement.bindString(4,sex);
             statement.execute();
-
-
 
             Toast.makeText(getContext(),"Mascota Registrada",Toast.LENGTH_SHORT).show();
         }catch (Exception ex){
@@ -203,9 +191,4 @@ public class TercerFragment extends Fragment {
             Toast.makeText(getContext(),"Error, no se pudieron editar los datos.",Toast.LENGTH_LONG).show();
         }
     }
-
-
-
-
-
 }

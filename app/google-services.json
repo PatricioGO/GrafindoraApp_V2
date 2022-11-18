@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "202874379380",
+    "project_id": "grafindora-4bfcd",
+    "storage_bucket": "grafindora-4bfcd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202874379380:android:7192fd3c6b8491cf87c521",
+        "android_client_info": {
+          "package_name": "santoTomas.grafindora_appv2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "202874379380-4ormofkmm3980phf07fq14krgedlqe1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA29zfOPEVpRe_cXkBB8QITIwcI3sd9DTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "202874379380-4ormofkmm3980phf07fq14krgedlqe1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

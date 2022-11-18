@@ -19,7 +19,6 @@ import java.util.List;
 
 public class AlertasAdapter extends RecyclerView.Adapter<AlertasAdapter.AlertasViewHolder> {
 
-
         List<Alertas> alertas = new ArrayList<Alertas>();
 
         public AlertasAdapter(ArrayList<Alertas> alertas){
@@ -53,7 +52,6 @@ public class AlertasAdapter extends RecyclerView.Adapter<AlertasAdapter.AlertasV
                     int des = c.getColumnIndex("descrip");
                     int nom = c.getColumnIndex("nombre");
 
-
                     if(c.moveToFirst())
                     {
                         alertas.clear();
@@ -74,11 +72,7 @@ public class AlertasAdapter extends RecyclerView.Adapter<AlertasAdapter.AlertasV
                     Log.d("DELETE", ex.getMessage());
                 };
 
-
-
         });
-
-
         }
 
     @Override

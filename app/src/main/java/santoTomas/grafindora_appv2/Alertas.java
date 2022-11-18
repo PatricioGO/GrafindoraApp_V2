@@ -11,7 +11,7 @@ public class Alertas {
 
     }
 
-    public Alertas(String nombre, String descripcion, String hora) {
+    public Alertas(String nombre, String descripcion, String hora,int id) {
         this.hora = hora;
         this.nombre = nombre;
         this.descripcion = descripcion;

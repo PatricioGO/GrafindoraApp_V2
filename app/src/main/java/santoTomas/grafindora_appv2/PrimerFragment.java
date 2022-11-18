@@ -2,28 +2,39 @@ package santoTomas.grafindora_appv2;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -46,7 +57,11 @@ public class PrimerFragment extends Fragment {
 
 
     private ImageView imgPerfil;
+    private FirebaseStorage storage;
+    private StorageReference mStorage;
     final int CAPTURA_IMAGEN = 1;
+    private static final int GALLERY_INTENT = 1;
+    private ProgressDialog mProgresDialog;
     String []archivos;
 
     public PrimerFragment() {
@@ -67,9 +82,39 @@ public class PrimerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
+        storage= FirebaseStorage.getInstance();
+
+        StorageReference storageRef = storage.getReference();
+       StorageReference fotoPerfil = storageRef.child("fotosPerfil.jpg");
+
+        try {
+            File localfile = File.createTempFile("images","jpg");
+            fotoPerfil.getFile(localfile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Glide.with(getContext())
+                            .load(localfile)
+                            .fitCenter()
+                            .centerCrop()
+                            .into(imgPerfil);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         archivos= getContext().fileList();
 
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_primer, container, false);
+
+        return view;
     }
 
     @Override
@@ -82,12 +127,17 @@ public class PrimerFragment extends Fragment {
         TextView sexo = view.findViewById(R.id.tvsexo);
         Button btnCamara= view.findViewById(R.id.btncam);
         imgPerfil = view.findViewById(R.id.imgperfil);
+        mProgresDialog = new ProgressDialog(getContext());
+
+        mStorage= FirebaseStorage.getInstance().getReference();
         
         btnCamara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,CAPTURA_IMAGEN);
+
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent,GALLERY_INTENT);
             }
         });
 
@@ -111,7 +161,6 @@ public class PrimerFragment extends Fragment {
             mascota.raza = c.getString(raz).toString();
             mascota.sexo = c.getString(sex).toString();
 
-
             nombre.append(" "+mascota.nombre);
             edad.append(" "+mascota.edad);
             raza.append(" " +mascota.raza);
@@ -120,55 +169,45 @@ public class PrimerFragment extends Fragment {
 
         }catch (Exception ex){}
 
-        verFoto(archivos.length);
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==CAPTURA_IMAGEN && resultCode == RESULT_OK){
+        if(requestCode==GALLERY_INTENT && resultCode == RESULT_OK){
 
-            Bundle extras = data.getExtras();
-            Bitmap bitmap = (Bitmap) extras.get("data");
-            imgPerfil.setImageBitmap(bitmap);
-            try {
-                FileOutputStream fos = getContext().openFileOutput(crearNombreArchivo(),Context.MODE_PRIVATE);
-                bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
-                imgPerfil.setImageBitmap(bitmap);
-                fos.close();
-                archivos= getContext().fileList();
+            mProgresDialog.setTitle("Subiedo...");
+            mProgresDialog.setMessage("Subiendo foto a FireBase");
+            mProgresDialog.setCancelable(false);
+            mProgresDialog.show();
 
-            }catch (Exception e){}
+            Uri uri = data.getData();
+            StorageReference filePath = mStorage.child("fotosPerfil.jpg");
+
+            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    mProgresDialog.dismiss();
+
+                    filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(getContext())
+                                    .load(uri)
+                                    .fitCenter()
+                                    .centerCrop()
+                                    .into(imgPerfil);
+                        }
+                    });
+
+                    Toast.makeText(getContext(),"Foto subida correctamente",Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
-        verFoto(archivos.length);
 
     }
 
-
-    private String crearNombreArchivo() {
-        String fecha = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-        return fecha+".jpg";
-    }
-
-    public void verFoto(int position){
-        try {
-            FileInputStream fileInputStream= getContext().openFileInput(archivos[position-1]);
-            Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
-            imgPerfil.setImageBitmap(bitmap);
-            fileInputStream.close();
-        }catch (Exception e){}
-
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_primer, container, false);
-
-        return view;
-    }
 }
